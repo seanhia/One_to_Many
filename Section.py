@@ -40,7 +40,7 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
 
     def __init__(self, department_abbreviation: str, course_number: int, section_number: int,
                  semester: str, section_year: int, building: str, room: int, schedule: str,
-                 start_time: Time, instructor: int, courses: Course):
+                 start_time: Time, instructor: str, courses: Course):
         # not sure how to use compound primary keys/relationship
         self.department_abbreviation = department_abbreviation
         self.course_number = course_number

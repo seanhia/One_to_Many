@@ -8,6 +8,7 @@ from orm_base import metadata
 # will not execute that code, and SQLAlchemy will be unaware of the mapped table.
 from Department import Department
 from Course import Course
+from Section import Section
 from Option import Option
 from Menu import Menu
 # Poor man's enumeration of the two available modes for creating the tables
@@ -15,6 +16,7 @@ from constants import START_OVER, INTROSPECT_TABLES, REUSE_NO_INTROSPECTION
 import IPython  # So that I can exit out to the console without leaving the application.
 from sqlalchemy import inspect  # map from column name to attribute name
 from pprint import pprint
+
 
 
 def add_department(session):
@@ -77,6 +79,39 @@ def add_course(session):
     units: int = int(input('How many units for this course-->'))
     course = Course(department, number, name, description, units)
     session.add(course)
+
+
+def add_section(session):
+    unique_year: bool = False
+    unique_semester: bool = False
+    unique_schedule: bool = False
+    unique_start_time: bool = False
+    unique_building: bool = False
+    unique_room: bool = False
+    unique_instructor: bool = False
+
+    year: int = ''
+    semester: str = ''
+    schedule: str = ''
+    start_time: time = ''
+    building: str = ''
+    room: int = ''
+    instructor: str = ''
+
+    while not unique_year or unique_semester or unique_schedule or unique_start_time or unique_room or unique_building:
+        year = int(input("Section Year--> "))
+        semester = input("Section semester--> ")
+        schedule = input("Schedule--> ")
+        start_time = time(input("Start time--> "))
+        building = input("Section building--> ")
+        room = int(input("Section room--> "))
+        instructor = input("Section instructor--> ")
+
+        year_count: int = session.query(Section).filter(Section.section_year == year).count()
+        unique_year = year_count == 0
+        if not unique_year:
+            print("We already have a section with that year")
+
 
 
 def select_department(sess) -> Department:
