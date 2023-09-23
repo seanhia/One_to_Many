@@ -39,11 +39,9 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         a cyclic import loop and Python will not be able to interpret either of
         those class definition files."""
         __tablename__ = DC.__tablename__
-        """abbreviation: Mapped[str] = DC.abbreviation
+        abbreviation: Mapped[str] = DC.abbreviation
         courses: Mapped[List["Course"]] = DC.courses
-        name: Mapped[str] = DC.name"""
-        name: Mapped[str] = mapped_column('name', String(50), nullable=False, primary_key=True)
-        abbreviation: Mapped[str] = mapped_column('abbreviation', String(6), nullable=False)
+        name: Mapped[str] = DC.name
         chairName: Mapped[str] = mapped_column('chair_name', String(80), nullable=False)
         building: Mapped[str] = mapped_column('building', String(10), nullable=False)
         office: Mapped[int] = mapped_column('office', Integer, nullable=False)
