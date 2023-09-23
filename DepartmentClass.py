@@ -13,7 +13,11 @@ name: Mapped[str] = mapped_column('name', String(50), nullable=False)
 # __table_args__ can best be viewed as directives that we ask SQLAlchemy to
 # send to the database.  In this case, that we want two separate uniqueness
 # constraints (candidate keys).
-__table_args__ = (UniqueConstraint("name", name="departments_uk_01"),)
+__table_args__ = (UniqueConstraint("name", name="departments_uk_01"),
+                  UniqueConstraint("abbreviation", name="departments_uk_02"),
+                  UniqueConstraint("chair_name", name="departments_uk_03"),
+                  UniqueConstraint("building", "office", name="departments_uk_04"),
+                  UniqueConstraint("description", name="departments_uk_05"))
 
 
 def add_course(self, course):
