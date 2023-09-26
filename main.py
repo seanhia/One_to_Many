@@ -11,6 +11,7 @@ from Course import Course
 from Section import Section
 from Option import Option
 from Menu import Menu
+import time
 # Poor man's enumeration of the two available modes for creating the tables
 from constants import START_OVER, INTROSPECT_TABLES, REUSE_NO_INTROSPECTION
 import IPython  # So that I can exit out to the console without leaving the application.
@@ -157,7 +158,24 @@ def select_course(sess) -> Course:
                                        Course.courseNumber == course_number).first()
     return course
 
+def select_section(sess) -> Section: #still need to work on this one
+    #prompt the user for a course
+    #go to the list of sections within that course object and display the sections
+    found: bool = False
 
+def delete_course(session):
+    #be sure to tell the user if they attempt to delete a course that does not exist
+    #use the select a course utility that is in the sample code to allow the user to select the course easily
+    #if the course that the user identifies for deletion is the parent to one or more sections, stop them before you have an exception thrown by the database
+    print("deleting a course")
+    course = select_course(session)
+
+def delete_section(session):
+    #be sure to tell the user if they attempt to delete a section that does not exist
+    #you can do this either by performing a select in the database and presenting the user a menu of sections to delete
+    #or prompt them for the information to identify the section (using the columns in one of the uniqueness constraints)
+    print("deleting a section")
+    section = select_section(session)
 def delete_department(session):
     """
     Prompt the user for a department by the abbreviation and delete it.
@@ -172,6 +190,12 @@ def delete_department(session):
               "then come back here to delete the department.")
     else:
         session.delete(department)
+
+def list_section(session): #still needs work
+
+    #list section in course
+    #prompt user to select a course
+    #go to the list of sections within that course object and display the sections
 
 
 def list_departments(session):
