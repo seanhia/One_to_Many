@@ -31,8 +31,8 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         that for the relationship from courses into sections.
         """
         departmentAbbreviation: Mapped[str] = mapped_column('department_abbreviation',
-    #                                                       ForeignKey("departments.abbreviation"),
-                                                            primary_key=True)
+        #ForeignKey("departments.abbreviation"),
+        primary_key=True)
         department: Mapped["Department"] = relationship(back_populates="courses")
         courseNumber: Mapped[int] = mapped_column('course_number', Integer,
                                                   nullable=False, primary_key=True)

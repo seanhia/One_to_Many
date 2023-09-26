@@ -169,6 +169,13 @@ def delete_course(session):
     #if the course that the user identifies for deletion is the parent to one or more sections, stop them before you have an exception thrown by the database
     print("deleting a course")
     course = select_course(session)
+    has_section = session.query(Course).filter_by(Course.departmentAbbreviation).first() #check if there are any sections in course
+    if has_section:
+        print("This course is a parent to one or more sections. Delete them first, then come back here to delete the course.")
+    else:
+        session.delete(course)
+
+
 
 def delete_section(session):
     #be sure to tell the user if they attempt to delete a section that does not exist
@@ -176,6 +183,12 @@ def delete_section(session):
     #or prompt them for the information to identify the section (using the columns in one of the uniqueness constraints)
     print("deleting a section")
     section = select_section(session)
+    n_courses = session.query(Section).filter(Section.departmentAbbreviation == section.abbreviation).count() #this line could change depending on how we do select_section
+    if n_courses > 0:
+        print(f"Sorry, there are {n_courses} courses in that section.  Delete them first, "
+              "then come back here to delete the section.")
+    else:
+        session.delete(section)
 def delete_department(session):
     """
     Prompt the user for a department by the abbreviation and delete it.
