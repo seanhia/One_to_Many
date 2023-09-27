@@ -99,7 +99,7 @@ def add_section(session):
     room: int = ''
     instructor: str = ''
 
-    while not unique_year or unique_semester or unique_schedule or unique_start_time or unique_room or unique_building:
+    while not unique_year or not unique_semester or not unique_schedule or not unique_start_time or not unique_room or not unique_building or not unique_instructor:
         year = int(input("Section Year--> "))
         semester = input("Section semester--> ")
         schedule = input("Schedule--> ")
@@ -111,7 +111,39 @@ def add_section(session):
         year_count: int = session.query(Section).filter(Section.section_year == year).count()
         unique_year = year_count == 0
         if not unique_year:
-            print("We already have a section with that year")
+            print("We already have a section with that year. Try again")
+            if unique_year:
+                semester_count = session.query(Section).filter(Section.semester == semester).count()
+                unique_semester = semester_count == 0
+                if not unique_semester:
+                    print("We already have a section in that semester. Try again")
+                    if unique_semester:
+                        schedule_count = session.query(Section).filter(Section.schedule == schedule).count()
+                        unique_schedule = schedule_count == 0
+                        if not unique_schedule:
+                            print("We already have a section with that schedule. Try again")
+                            if unique_schedule:
+                                start_time_count = session.query(Section).filter(Section.startTime == start_time).count()
+                                unique_start_time = start_time_count == 0
+                                if not unique_start_time:
+                                    print("We already have a section with that start time. Try again")
+                                    if unique_start_time:
+                                        building_count = session.query(Section).filter(Section.building == building).count()
+                                        unique_building = building_count == 0
+                                        if not unique_building:
+                                            print("We already have a section in that building. Try again")
+                                            if unique_building:
+                                                room_count = session.query(Section).filter(
+                                                    Section.room == room).count()
+                                                unique_room = room_count == 0
+                                                if not unique_room:
+                                                    print("We already have a section in that room. Try again")
+                                                    if unique_room:
+                                                        instructor_count = session.query(Section).filter(
+                                                            Section.instructor == instructor).count()
+                                                        unique_instructor = instructor_count == 0
+        newSection = Section(year, semester, schedule, start_time, building, room, instructor)
+        session.add(newSection)
 
 
 
@@ -205,7 +237,7 @@ def delete_department(session):
         session.delete(department)
 
 def list_section(session): #still needs work
-
+    pass
     #list section in course
     #prompt user to select a course
     #go to the list of sections within that course object and display the sections

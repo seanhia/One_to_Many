@@ -16,6 +16,7 @@ variables or not in Python.
 menu_main = Menu('main', 'Please select one of the following options:', [
     Option("Add department", "add_department(sess)"),
     Option("Add course", "add_course(sess)"),
+    Option("Add section", "add_section(session)"),
     Option("Delete department", "delete_department(sess)"),
     Option("Delete course", "delete_course(sess)"),
     Option("List all departments", "list_departments(sess)"),

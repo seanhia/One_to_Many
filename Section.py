@@ -38,7 +38,7 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
                                            "building", "room", name="sections_uk_01"),
                           UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "instructor", name="sections_uk_02"),
-                          ForeignKeyConstraint([department_abbreviation, course_number],
+                          ForeignKeyConstraint([departmentAbbreviation, courseNumber],
                                                [Course.department_abbreviation, Course.course_number]))
 
         def __init__(self, department_abbreviation: str, course_number: int, section_number: int,
