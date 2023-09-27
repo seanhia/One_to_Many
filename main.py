@@ -194,6 +194,16 @@ def select_section(sess) -> Section: #still need to work on this one
     #prompt the user for a course
     #go to the list of sections within that course object and display the sections
     found: bool = False
+    abbreviation: str = ''
+    while not found:
+        abbreviation = input("Section abbreviation--> ")
+        abbreviation_count: int = sess.query(Section).filter(Section.departmentAbbreviation == abbreviation).count()
+        found = abbreviation_count == 1
+        if not found:
+            print("No section with that abbreviation")
+        section = sess.query(Section).filter(Section.departmentAbbreviation == abbreviation).first()
+        return section
+
 
 
 def delete_course(session):
