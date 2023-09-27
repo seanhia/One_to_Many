@@ -1,7 +1,7 @@
 from orm_base import Base
 from db_connection import engine
 from IntrospectionFactory import IntrospectionFactory
-from sqlalchemy import UniqueConstraint, ForeignKeyConstraint
+from sqlalchemy import UniqueConstraint, ForeignKeyConstraint, ForeignKey
 from sqlalchemy import String, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship, column_property
 from sqlalchemy import Table

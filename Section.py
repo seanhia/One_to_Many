@@ -1,7 +1,7 @@
 from orm_base import Base
 from sqlalchemy import Table
 from sqlalchemy.orm import Mapped, mapped_column, relationship, column_property
-from sqlalchemy import String, Integer
+from sqlalchemy import String, Integer, CheckConstraint
 from sqlalchemy.types import Time
 from sqlalchemy import UniqueConstraint, ForeignKey, ForeignKeyConstraint
 from IntrospectionFactory import IntrospectionFactory
@@ -9,6 +9,7 @@ from Department import Department
 from Course import Course
 from typing import List
 from constants import START_OVER, REUSE_NO_INTROSPECTION, INTROSPECT_TABLES
+
 
 introspection_type = IntrospectionFactory().introspection_type
 if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
@@ -20,7 +21,7 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
         __tablename__ = "sections"
 
         departmentAbbreviation: Mapped[str] = mapped_column('department_abbreviation', String(10),
-                                                             primary_key=True)
+                                                             ForeignKey("department.abbreviation"), primary_key=True)
         courseNumber: Mapped[int] = mapped_column('course_number', Integer, primary_key=True)
         sectionNumber: Mapped[int] = mapped_column('section_number', Integer, primary_key=True)
         semester: Mapped[str] = mapped_column('semester', String(10), nullable=False, primary_key=True)  # cuz mandatory
@@ -37,9 +38,7 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
         __table_args__ = (UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "building", "room", name="sections_uk_01"),
                           UniqueConstraint("section_year", "semester", "schedule", "start_time",
-                                           "instructor", name="sections_uk_02"),
-                          ForeignKeyConstraint([departmentAbbreviation, courseNumber],
-                                               [Course.department_abbreviation, Course.course_number]))
+                                           "instructor", name="sections_uk_02"))
 
         def __init__(self, department_abbreviation: str, course_number: int, section_number: int,
                      semester: str, section_year: int, building: str, room: int, schedule: str,
