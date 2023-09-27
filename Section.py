@@ -20,7 +20,7 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
         __tablename__ = "sections"
 
         departmentAbbreviation: Mapped[str] = mapped_column('department_abbreviation', String(10),
-                                                             primary_key=True)
+                                                             ForeignKey("department.abbreviation"),primary_key=True)
         courseNumber: Mapped[int] = mapped_column('course_number', Integer, primary_key=True)
         sectionNumber: Mapped[int] = mapped_column('section_number', Integer, primary_key=True)
         semester: Mapped[str] = mapped_column('semester', String(10), nullable=False, primary_key=True)  # cuz mandatory
