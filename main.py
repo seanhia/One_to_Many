@@ -195,6 +195,7 @@ def select_section(sess) -> Section: #still need to work on this one
     #go to the list of sections within that course object and display the sections
     found: bool = False
 
+
 def delete_course(session):
     #be sure to tell the user if they attempt to delete a course that does not exist
     #use the select a course utility that is in the sample code to allow the user to select the course easily
