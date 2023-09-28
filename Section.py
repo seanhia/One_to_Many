@@ -23,7 +23,7 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
                                                              ForeignKey("department.abbreviation"),primary_key=True)
         courseNumber: Mapped[int] = mapped_column('course_number', Integer, primary_key=True)
         sectionNumber: Mapped[int] = mapped_column('section_number', Integer, primary_key=True)
-        semester: Mapped[str] = mapped_column('semester', String(10), nullable=False, primary_key=True)  # cuz mandatory
+        semester: Mapped[str] = mapped_column('semester', String(10), CheckConstraint(semester, IN('Fall','Spring','Winter','Summer I','Summer II'), name="semester_values_check"), nullable=False, primary_key=True)  # cuz mandatory
         sectionYear: Mapped[int] = mapped_column('section_year', Integer, nullable=False,
                                                   primary_key=True)
         building: Mapped[str] = mapped_column('building', String(6), nullable=False)
