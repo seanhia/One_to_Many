@@ -3,7 +3,7 @@ from sqlalchemy import Table
 from sqlalchemy.orm import Mapped, mapped_column, relationship, column_property
 from sqlalchemy import String, Integer
 from sqlalchemy.types import Time
-from sqlalchemy import UniqueConstraint, ForeignKey, ForeignKeyConstraint
+from sqlalchemy import UniqueConstraint, ForeignKey, ForeignKeyConstraint, CheckConstraint
 from IntrospectionFactory import IntrospectionFactory
 from Department import Department
 from Course import Course
@@ -23,7 +23,7 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
                                                              ForeignKey("department.abbreviation"),primary_key=True)
         courseNumber: Mapped[int] = mapped_column('course_number', Integer, primary_key=True)
         sectionNumber: Mapped[int] = mapped_column('section_number', Integer, primary_key=True)
-        semester: Mapped[str] = mapped_column('semester', String(10), CheckConstraint(semester, IN('Fall','Spring','Winter','Summer I','Summer II'), name="semester_values_check"), nullable=False, primary_key=True)  # cuz mandatory
+        semester: Mapped[str] = mapped_column('semester', String(10), CheckConstraint("semester IN('Fall','Spring','Winter','Summer I','Summer II')", name="semester_values_check"), nullable=False, primary_key=True)  # cuz mandatory
         sectionYear: Mapped[int] = mapped_column('section_year', Integer, nullable=False,
                                                   primary_key=True)
         building: Mapped[str] = mapped_column('building', String(6), nullable=False)
@@ -32,7 +32,7 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
         startTime: Mapped[Time] = mapped_column('start_time', Time, nullable=False)
         instructor: Mapped[str] = mapped_column('instructor', String(80), nullable=False)
 
-        courses: Mapped[List["Course"]] = relationship(back_populates="sections")
+        course: Mapped["Course"] = relationship("Course", back_populates="sections")
 
         __table_args__ = (UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "building", "room", name="sections_uk_01"),
