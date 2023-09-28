@@ -30,11 +30,12 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         ForeignKey.  I show you how to do it in __table_args__ because you'll need
         that for the relationship from courses into sections.
         """
+
         departmentAbbreviation: Mapped[str] = mapped_column('department_abbreviation',
         #ForeignKey("departments.abbreviation"),
         primary_key=True)
-        section: Mapped["Section"] = relationship("section", back_populates="courses")
-        department: Mapped["Department"] = relationship("department", back_populates="courses")
+        section: Mapped["Section"] = relationship(back_populates="courses")
+        department: Mapped["Department"] = relationship(back_populates="courses")
         courseNumber: Mapped[int] = mapped_column('course_number', Integer,
                                                   nullable=False, primary_key=True)
         name: Mapped[str] = mapped_column('name', String(50), nullable=False)
@@ -59,6 +60,7 @@ elif introspection_type == INTROSPECT_TABLES:
         # Otherwise, this property will be named department_abbreviation
         departmentAbbreviation: Mapped[str] = column_property(__table__.c.department_abbreviation)
         # This back_populates will not be created by the introspection.
+        section: Mapped["Section"] = relationship(back_populates="courses")
         department: Mapped["Department"] = relationship(back_populates="courses")
         # Otherwise, this property will be named course_number
         courseNumber: Mapped[int] = column_property(__table__.c.course_number)

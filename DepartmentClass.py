@@ -8,7 +8,7 @@ regardless whether we introspect or not."""
 __tablename__ = "departments"  # Give SQLAlchemy th name of the table.
 abbreviation: Mapped[str] = mapped_column('abbreviation', String,
                                           nullable=False, primary_key=True)
-courses: Mapped[List["Course"]] = relationship("Course", back_populates="department")
+courses: Mapped[List["Course"]] = relationship(back_populates="department")
 name: Mapped[str] = mapped_column('name', String(50), nullable=False)
 # __table_args__ can best be viewed as directives that we ask SQLAlchemy to
 # send to the database.  In this case, that we want two separate uniqueness

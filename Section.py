@@ -19,20 +19,19 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
          at 3:30 whereas Section 2 meets at 12 noon."""
         __tablename__ = "sections"
 
-        departmentAbbreviation: Mapped[str] = mapped_column('department_abbreviation', String(10),
-                                                             ForeignKey("department.abbreviation"),primary_key=True)
-        courseNumber: Mapped[int] = mapped_column('course_number', Integer, primary_key=True)
+        departmentAbbreviation: Mapped[str] = mapped_column('department_abbreviation', String(10), ForeignKey("departments.abbreviation"), primary_key=True)
+        courseNumber: Mapped[int] = mapped_column('course_number', Integer, ForeignKey("course.course_number"), primary_key=True)
         sectionNumber: Mapped[int] = mapped_column('section_number', Integer, primary_key=True)
         semester: Mapped[str] = mapped_column('semester', String(10), CheckConstraint("semester IN('Fall','Spring','Winter','Summer I','Summer II')", name="semester_values_check"), nullable=False, primary_key=True)  # cuz mandatory
         sectionYear: Mapped[int] = mapped_column('section_year', Integer, nullable=False,
                                                   primary_key=True)
-        building: Mapped[str] = mapped_column('building', String(6), nullable=False)
+        building: Mapped[str] = mapped_column('building', String(6),CheckConstraint("building IN('VEC','ECS','EN2','EN3','EN4','ET','SSPA')", name="building_values_check") , nullable=False)
         room: Mapped[int] = mapped_column('room', Integer, nullable=False)
-        schedule: Mapped[str] = mapped_column('schedule', String(6), nullable=False)
+        schedule: Mapped[str] = mapped_column('schedule', String(6), CheckConstraint("schedule IN('MW','TuTh','MWF','F','S')", name="schedule_values_check") ,nullable=False)
         startTime: Mapped[Time] = mapped_column('start_time', Time, nullable=False)
         instructor: Mapped[str] = mapped_column('instructor', String(80), nullable=False)
 
-        course: Mapped["Course"] = relationship("Course", back_populates="sections")
+        course: Mapped["Course"] = relationship(back_populates="sections")
 
         __table_args__ = (UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "building", "room", name="sections_uk_01"),
