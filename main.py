@@ -240,7 +240,7 @@ def delete_section(session):
     #or prompt them for the information to identify the section (using the columns in one of the uniqueness constraints)
     print("deleting a section")
     section = select_section(session)
-    n_courses = session.query(Section).filter(Section.departmentAbbreviation == section.abbreviation).count() #this line could change depending on how we do select_section
+    n_courses = session.query(Section).filter(Section.departmentAbbreviation == section.abbreviation).count()
     if n_courses > 0:
         print(f"Sorry, there are {n_courses} courses in that section.  Delete them first, "
               "then come back here to delete the section.")
