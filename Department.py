@@ -51,10 +51,7 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
         # send to the database.  In this case, that we want two separate uniqueness
         # constraints (candidate keys).
         __table_args__ = DC.__table_args__
-        __table_args__ = (UniqueConstraint("abbreviation", name="departments_uk_01"),
-                          UniqueConstraint("chair_name", name="departments_uk_02"),
-                          UniqueConstraint("building", "office", name="departments_uk_03"),
-                          UniqueConstraint("description", name="departments_uk_04"))
+
 
         """The __init__ function appears to be special in SQLAlchemy.  I'm unable to 
         leave that out when the class is initially declared, and then add it in afterwards.
