@@ -31,7 +31,7 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
         startTime: Mapped[Time] = mapped_column('start_time', Time, nullable=False)
         instructor: Mapped[str] = mapped_column('instructor', String(80), nullable=False)
 
-        course: Mapped["Course"] = relationship(back_populates="sections")
+        courses: Mapped["Course"] = relationship(back_populates="section")
 
         __table_args__ = (UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "building", "room", name="sections_uk_01"),
