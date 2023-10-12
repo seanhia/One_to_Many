@@ -66,9 +66,6 @@ if introspection_type == START_OVER or introspection_type == REUSE_NO_INTROSPECT
             self.office = office
             self.description = description
 
-        def __str__(self):
-            return f"Name: {self.name} \nAbbreviation: {self.abbreviation}\nChair Name: {self.chairName}\nBuilding: {self.building} Office: {self.office}\nDescription: {self.description}\n"
-
 
 elif introspection_type == INTROSPECT_TABLES:
     # We need to connect to the database to introspect the table.  So I'm getting that done
@@ -84,16 +81,27 @@ elif introspection_type == INTROSPECT_TABLES:
         # The courses list will not get created just from introspecting the database, so I'm doing that here.
         courses: Mapped[List["Course"]] = DC.courses
         abbreviation: Mapped[str] = column_property(__table__.c.abbreviation)
+        chairName: Mapped[str] = column_property(__table__.c.chairName)
+        building: Mapped[str] = column_property(__table__.c.building)
+        office: Mapped[int] = column_property(__table__.c.office)
+        description: Mapped[str] = column_property(__table__.c.description)
 
         # I'm not actually overriding the attribute name here, I just want to see if I can do it.
         # The __table__ attribute refers to the Table object that we created by introspection.
         # More on metadata: https://docs.sqlalchemy.org/en/20/core/metadata.html
 
 
-        def __init__(self, abbreviation: str, name: str):
-            self.abbreviation = abbreviation
+        def __init__(self, name: str, abbreviation: str, chair_name: str, building: str, office: int, description: str):
             self.name = name
+            self.abbreviation = abbreviation
+            self.chairName = chair_name
+            self.building = building
+            self.office = office
+            self.description = description
 
+def __str__(self):
+    return f"Name: {self.name} \nAbbreviation: {self.abbreviation}\nChair Name: {self.chairName}\nBuilding: {self.building}" \
+        f" Office: {self.office}\nDescription: {self.description}\n"
 """I tried to bring in __init__ from the imported code in each of these two (see below)
 ways, and in both cases when I tried to use the __init__ constructor, it blew up with
 an error telling me that Department has no attribute: _sa_instance_state which I

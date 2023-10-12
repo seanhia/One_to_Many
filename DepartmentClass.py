@@ -6,7 +6,7 @@ from typing import List  # Use this for the list of courses offered by the depar
 """This is the guts of the department class that needs to be defined
 regardless whether we introspect or not."""
 __tablename__ = "departments"  # Give SQLAlchemy th name of the table.
-abbreviation: Mapped[str] = mapped_column('abbreviation', String,
+abbreviation: Mapped[str] = mapped_column('abbreviation', String(6),
                                           nullable=False, primary_key=True)
 courses: Mapped[List["Course"]] = relationship(back_populates="department")
 name: Mapped[str] = mapped_column('name', String(50), nullable=False)

@@ -19,7 +19,7 @@ from sqlalchemy import inspect  # map from column name to attribute name
 from pprint import pprint
 
 
-def add_department(session: Session):
+def add_department(session):
     unique_abbreviation: bool = False
     unique_chairName: bool = False
     unique_building_and_office: bool = False
@@ -29,7 +29,7 @@ def add_department(session: Session):
     abbreviation: str = ''
     chairName: str = ''
     building: str = ''
-    office: str = ''
+    office: int = 0
     description: str = ''
 
     while not unique_abbreviation or not unique_chairName or not unique_building_and_office or not unique_description:
@@ -50,7 +50,8 @@ def add_department(session: Session):
             if not unique_chairName:
                 print("We already have a department with that chair name. Try again.")
             if unique_chairName:
-                name_count = session.query(Department).filter(Department.building == building, Department.office == office).count()
+                name_count = session.query(Department).filter(Department.building == building,
+                                                              Department.office == office).count()
                 unique_building_and_office = name_count == 0
                 if not unique_building_and_office:
                     print("We already have a department with that building and office. Try again.")
