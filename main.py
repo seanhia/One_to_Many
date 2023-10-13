@@ -228,7 +228,7 @@ def select_section(sess) -> Section: #still need to work on this one
     schedule = ''
     instructor = ''
     while not found:
-        sectionYear = int(input("Section abbreviation--> "))
+        sectionYear = int(input("Section section year--> "))
         semester = input("Section semester--> ")
         schedule = input("Section schedule--> ")
         instructor = input("Section instructor--> ")

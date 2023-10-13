@@ -23,7 +23,7 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
         courseNumber: Mapped[int] = mapped_column('course_number', Integer, primary_key=True)
         sectionNumber: Mapped[int] = mapped_column('section_number', Integer, primary_key=True)
         semester: Mapped[str] = mapped_column('semester', String(10), CheckConstraint("semester IN('Fall','Spring','Winter','Summer I','Summer II')",
-                                                                                      name="semester_values_check"), nullable=False, primary_key=True)  # cuz mandatory
+                                                                                      name='semester_values_check'), nullable=False, primary_key=True)  # cuz mandatory
         sectionYear: Mapped[int] = mapped_column('section_year', Integer, nullable=False,
                                                   primary_key=True)
         schedule: Mapped[str] = mapped_column('schedule', String(6),
@@ -44,7 +44,8 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
                           UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "instructor", name="sections_uk_02"),
                           ForeignKeyConstraint([departmentAbbreviation, courseNumber],
-                                               [Course.departmentAbbreviation, Course.courseNumber]))
+                                               [Course.departmentAbbreviation, Course.courseNumber])
+                          )
 
         def __init__(self, course: Course, sectionNumber: int,
                      semester: str, sectionYear: int, building: str, room: int, schedule: str,
