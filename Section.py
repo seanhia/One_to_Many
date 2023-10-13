@@ -43,20 +43,20 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
                           ForeignKeyConstraint([departmentAbbreviation, courseNumber],
                                                [Course.department_abbreviation, Course.course_number]))
 
-        def __init__(self, course: Course, section_number: int,
-                     semester: str, section_year: int, building: str, room: int, schedule: str,
-                     start_time: Time, instructor: str):
+        def __init__(self, course: Course, sectionNumber: int,
+                     semester: str, sectionYear: int, building: str, room: int, schedule: str,
+                     startTime: Time, instructor: str):
             # not sure how to use compound primary keys/relationship
             #self.departmentAbbreviation = department_abbreviation
             #self.courseNumber = course_number
             self.set_course(course)
-            self.sectionNumber = section_number
+            self.sectionNumber = sectionNumber
             self.semester = semester
-            self.sectionYear = section_year
+            self.sectionYear = sectionYear
             self.building = building
             self.room = room
             self.schedule = schedule
-            self.startTime = start_time
+            self.startTime = startTime
             self.instructor = instructor
 
 elif introspection_type == INTROSPECT_TABLES:
@@ -72,27 +72,28 @@ elif introspection_type == INTROSPECT_TABLES:
 
 
 
-        def __init__(self, course: Course, section_number: int, semester: str, section_year: int, building: str,
-                     room: int, schedule: str, start_time: Time, instructor: str):
+        def __init__(self, course: Course, sectionNumber: int, semester: str, sectionYear: int, building: str,
+                     room: int, schedule: str, startTime: Time, instructor: str):
             # not sure how to use compound primary keys/relationship
             #self.departmentAbbreviation = department_abbreviation
             #self.courseNumber = course_number
             self.set_course(course)
-            self.sectionNumber = section_number
+            self.sectionNumber = sectionNumber
             self.semester = semester
-            self.sectionYear = section_year
+            self.sectionYear = sectionYear
             self.building = building
             self.room = room
             self.schedule = schedule
-            self.startTime = start_time
+            self.startTime = startTime
             self.instructor = instructor
 
 #indenting might help initialize the selfs
 def set_course(self, course: Course):
     self.course = course
+    self.departmentAbbreviation = course.departmentAbbreviation
     self.courseNumber = course.courseNumber
 def __str__(self):
-    return f"Department Abbreviation: {self.departmentAbbreviation}\nCourse Number: {self.courseNumber}\n" \ 
+    return f"Department Abbreviation: {self.departmentAbbreviation}\nCourse Number: {self.courseNumber}\n" \
            f"Section Number: {self.sectionNumber}\nSemester: {self.semester}\nSection Year: {self.sectionYear}\n" \
            f"Building: {self.building}\nRoom: {self.room}\nSchedule: {self.schedule}\nStart Time: {self.startTime}\n" \
            f"Instructor: {self.instructor}"
