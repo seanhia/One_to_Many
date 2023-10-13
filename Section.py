@@ -26,11 +26,14 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
                                                                                       name="semester_values_check"), nullable=False, primary_key=True)  # cuz mandatory
         sectionYear: Mapped[int] = mapped_column('section_year', Integer, nullable=False,
                                                   primary_key=True)
-        building: Mapped[str] = mapped_column('building', String(6), CheckConstraint("building IN('VEC','ECS','EN2','EN3','EN4','ET','SSPA')",
-                                                                                    name="building_values_check"), nullable=False)
+        schedule: Mapped[str] = mapped_column('schedule', String(6),
+                                              CheckConstraint("schedule IN('MW','TuTh','MWF','F','S')",
+                                                              name="schedule_values_check"), nullable=False)
+
         room: Mapped[int] = mapped_column('room', Integer, nullable=False)
-        schedule: Mapped[str] = mapped_column('schedule', String(6), CheckConstraint("schedule IN('MW','TuTh','MWF','F','S')",
-                                                                                     name="schedule_values_check"), nullable=False)
+        building: Mapped[str] = mapped_column('building', String(6),
+                                              CheckConstraint("building IN('VEC', 'ECS', 'EN2', 'EN3', 'EN4', 'ET', 'SSPA')",
+                                                              name="building_values_check"), nullable=False)
         startTime: Mapped[Time] = mapped_column('start_time', Time, nullable=False)
         instructor: Mapped[str] = mapped_column('instructor', String(80), nullable=False)
 
@@ -41,7 +44,7 @@ if introspection_type == START_OVER or REUSE_NO_INTROSPECTION:
                           UniqueConstraint("section_year", "semester", "schedule", "start_time",
                                            "instructor", name="sections_uk_02"),
                           ForeignKeyConstraint([departmentAbbreviation, courseNumber],
-                                               [Course.department_abbreviation, Course.course_number]))
+                                               [Course.departmentAbbreviation, Course.courseNumber]))
 
         def __init__(self, course: Course, sectionNumber: int,
                      semester: str, sectionYear: int, building: str, room: int, schedule: str,

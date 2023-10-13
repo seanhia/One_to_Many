@@ -80,6 +80,7 @@ elif introspection_type == INTROSPECT_TABLES:
 
         # The courses list will not get created just from introspecting the database, so I'm doing that here.
         courses: Mapped[List["Course"]] = DC.courses
+        name: Mapped[str] = column_property(__table__.c.name)
         abbreviation: Mapped[str] = column_property(__table__.c.abbreviation)
         chairName: Mapped[str] = column_property(__table__.c.chairName)
         building: Mapped[str] = column_property(__table__.c.building)
